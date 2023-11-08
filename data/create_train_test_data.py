@@ -12,6 +12,8 @@ df = pd.read_csv("./raw_data/relevancy_classifier_labeled_data_1000.csv", usecol
 df["label"] = df["label"].apply(lambda x: encode(x))
 
 for seed in [5768, 78516, 944601]: 
+    print(f"Generating train and test datasets with random seed {seed}")
     train_df, test_df = train_test_split(df, test_size=0.2, random_state=seed)
     train_df.to_excel(f'./train/relevancy-train-{seed}.xlsx', index=False)
     test_df.to_excel(f'./test/relevancy-test-{seed}.xlsx', index=False)
+print("Dataset splitting is complete")
