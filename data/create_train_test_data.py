@@ -7,7 +7,7 @@ def encode(label_word):
     elif label_word == "r":
         return 1
     
-df = pd.read_csv("./raw_data/relevancy_classifier_labeled_data.csv", usecols=['sentences', 'label'])
+df = pd.read_csv("./raw_data/relevancy_classifier_labeled_data_1000.csv", usecols=['sentences', 'label'])
 
 df["label"] = df["label"].apply(lambda x: encode(x))
 
