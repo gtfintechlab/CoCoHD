@@ -81,17 +81,17 @@ def fine_tune_plm(gpu_numbers: str, train_data_path: str, test_data_path: str, l
     # select language model
     try: 
         if language_model_to_use == 'roberta':
-            model = RobertaForSequenceClassification.from_pretrained('roberta-base', num_labels=3).to(device)
+            model = RobertaForSequenceClassification.from_pretrained('roberta-base', num_labels=2).to(device)
         elif language_model_to_use == 'roberta-large':
-            model = RobertaForSequenceClassification.from_pretrained('roberta-large', num_labels=3).to(device)
+            model = RobertaForSequenceClassification.from_pretrained('roberta-large', num_labels=2).to(device)
         else:
             return -1
     except:
         sleep(600)
         if language_model_to_use == 'roberta':
-            model = RobertaForSequenceClassification.from_pretrained('roberta-base', num_labels=3).to(device)
+            model = RobertaForSequenceClassification.from_pretrained('roberta-base', num_labels=2).to(device)
         elif language_model_to_use == 'roberta-large':
-            model = RobertaForSequenceClassification.from_pretrained('roberta-large', num_labels=3).to(device)
+            model = RobertaForSequenceClassification.from_pretrained('roberta-large', num_labels=2).to(device)
         else:
             return -1
 
