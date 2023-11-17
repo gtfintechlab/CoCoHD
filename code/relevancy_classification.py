@@ -66,5 +66,5 @@ def classify_relevancy():
         executor.map(classify_row, dataset)
 
 if __name__ == "__main__":
-    results_path = '../data/analysis_data/relevancy_results.csv'
+    results_path = '../data/analysis_data/relevancy_full_labeled.csv'
     classify_relevancy()

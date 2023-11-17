@@ -27,16 +27,13 @@ def classify_IncDec():
             exit()
 
     with open(results_path, 'w', newline='', encoding='utf-8') as csvfile:
-        # fieldnames = ['id', 'date', 'hearing_num', 'sentence', 'label']
-        fieldnames = ['id', 'sentence', 'label']
+        fieldnames = ['id', 'date', 'hearing_num', 'sentence', 'label']
         csv_writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         
         # Write the header
         csv_writer.writeheader()
 
-    # Alternative
-    dataset = load_dataset('csv', data_files="../data/raw_data/inc_dec_classifier_labeled_data_701.csv", split='train')
-    # dataset = load_dataset('csv', data_files="../data/raw_data/classification_test_data.csv", split='train')
+    dataset = load_dataset('csv', data_files="../data/processed_data/IncDec_full_unlabeled.csv", split='train')
 
     tokenizer = AutoTokenizer.from_pretrained(path, do_lower_case=True, do_basic_tokenize=True)
     model = AutoModelForSequenceClassification.from_pretrained(path, num_labels=3)
@@ -45,21 +42,19 @@ def classify_IncDec():
     classifier = pipeline('text-classification', model=model, tokenizer=tokenizer, config=config, device=0, framework="pt")
 
     def classify_row(row):
-        # id, date, hearing_num, sentence = row['Unnamed: 0'], row['date'], row['hearing_num'], row['sentences']
-        id, sentence = row['Unnamed: 0'], row['sentences']
+        id, date, hearing_num, sentence = row['id'], row['date'], row['hearing_num'], row['sentence']
         label_dict = {'LABEL_0': "p", "LABEL_1": 'd', "LABEL_2": "n"}
         label = label_dict[classifier(sentence, batch_size=4, truncation='only_first', max_length=512)[0]['label']]
 
         with open(results_path, 'a', newline='', encoding='utf-8') as csvfile:
-            # fieldnames = ['id', 'date', 'hearing_num', 'sentence', 'label']
-            fieldnames = ['id', 'sentence', 'label']
+            fieldnames = ['id', 'date', 'hearing_num', 'sentence', 'label']
             writer = csv.DictWriter(csvfile, fieldnames)
 
             # Write the result for the current text
             writer.writerow({
                 'id': id,
-                # 'date': date,
-                # 'hearing_num': hearing_num,
+                'date': date,
+                'hearing_num': hearing_num,
                 'sentence': sentence,
                 'label': label
             })
@@ -69,5 +64,5 @@ def classify_IncDec():
         executor.map(classify_row, dataset)
 
 if __name__ == "__main__":
-    results_path = '../data/analysis_data/IncDec_results.csv'
+    results_path = '../data/analysis_data/IncDec_full_labeled.csv'
     classify_IncDec()
