@@ -21,7 +21,7 @@ from transformers import (
 
 # sys.path.append('..')
 
-def fine_tune_plm(gpu_numbers: str, train_data_path: str, test_data_path: str, language_model_to_use: str, seed: int, batch_size: int, learning_rate: float, save_model_path: str):
+def fine_tune_plm(gpu_numbers: str, train_data_path: str, test_data_path: str, language_model_to_use: str, seed: int, batch_size: int, learning_rate: float, save_model_path: str, num_labels: int):
     """
     Description: Run experiment over particular batch size, learning rate and seed
     """
@@ -226,7 +226,7 @@ def fine_tune_plm(gpu_numbers: str, train_data_path: str, test_data_path: str, l
     return experiment_results
 
 
-def train_lm_experiments(gpu_numbers: str, train_data_path_prefix: str, test_data_path_prefix: str, language_model_to_use: str, data_category: str):
+def train_lm_experiments(gpu_numbers: str, train_data_path_prefix: str, test_data_path_prefix: str, language_model_to_use: str, data_category: str, num_labels: int):
     """
     Description: Run experiments over different batch sizes, learning rates and seeds to find best hyperparameters
     """
@@ -245,7 +245,7 @@ def train_lm_experiments(gpu_numbers: str, train_data_path_prefix: str, test_dat
                 train_data_path = train_data_path_prefix + "-" + str(seed) + ".xlsx"
                 test_data_path = test_data_path_prefix + "-" + str(seed) + ".xlsx"
 
-                results.append(fine_tune_plm(gpu_numbers, train_data_path, test_data_path, language_model_to_use, seed, batch_size, learning_rate, None))
+                results.append(fine_tune_plm(gpu_numbers, train_data_path, test_data_path, language_model_to_use, seed, batch_size, learning_rate, None, num_labels))
                 df = pd.DataFrame(results, columns=["Seed", "Learning Rate", "Batch Size", "Val Cross Entropy", "Val Accuracy", "Val F1 Score", "Test Cross Entropy", "Test Accuracy", "Test F1 Score", "Fine Tuning Time(m)", "Test Labeling Time(m)"])
                 df.to_excel(f'../data/grid_search_results/final_{data_category}_{language_model_to_use}.xlsx', index=False)
 
@@ -254,13 +254,12 @@ if __name__=='__main__':
     start_t = time()
 
     data_category = "IncDec" # relevancy | IncDec
-    num_labels = 3
 
     # experiments
     for language_model_to_use in ["roberta", "roberta-large"]: # provide list of models
         train_data_path_prefix = "../data/train/" + data_category + "-train"
         test_data_path_prefix = "../data/test/" + data_category + "-test"
-        train_lm_experiments(gpu_numbers="0", train_data_path_prefix=train_data_path_prefix, test_data_path_prefix=test_data_path_prefix, language_model_to_use=language_model_to_use, data_category=data_category)
+        train_lm_experiments(gpu_numbers="0", train_data_path_prefix=train_data_path_prefix, test_data_path_prefix=test_data_path_prefix, language_model_to_use=language_model_to_use, data_category=data_category, num_labels=3)
     
     print((time() - start_t)/60.0)
     
