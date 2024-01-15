@@ -253,7 +253,7 @@ def train_lm_experiments(gpu_numbers: str, train_data_path_prefix: str, test_dat
 if __name__=='__main__':
     start_t = time()
 
-    data_category = "IncDec" # relevancy | IncDec
+    data_category = "relevancy" # relevancy | IncDec
 
     # experiments
     for language_model_to_use in ["roberta", "roberta-large"]: # provide list of models
