@@ -255,11 +255,24 @@ if __name__=='__main__':
 
     data_category = "relevancy" # relevancy | IncDec
 
-    # experiments
-    for language_model_to_use in ["roberta", "roberta-large"]: # provide list of models
-        train_data_path_prefix = "../data/train/" + data_category + "-train"
-        test_data_path_prefix = "../data/test/" + data_category + "-test"
-        train_lm_experiments(gpu_numbers="0", train_data_path_prefix=train_data_path_prefix, test_data_path_prefix=test_data_path_prefix, language_model_to_use=language_model_to_use, data_category=data_category, num_labels=3)
+    # # experiments
+    # for data_category in ["relevancy", "IncDec"]:
+    #     for language_model_to_use in ["roberta", "roberta-large"]: # provide list of models
+    #         train_data_path_prefix = "../data/train/" + data_category + "-train"
+    #         test_data_path_prefix = "../data/test/" + data_category + "-test"
+    #         if data_category == "relevancy":
+    #             train_lm_experiments(gpu_numbers="0", train_data_path_prefix=train_data_path_prefix, test_data_path_prefix=test_data_path_prefix, language_model_to_use=language_model_to_use, data_category=data_category, num_labels=2)
+    #         else:
+    #             train_lm_experiments(gpu_numbers="0", train_data_path_prefix=train_data_path_prefix, test_data_path_prefix=test_data_path_prefix, language_model_to_use=language_model_to_use, data_category=data_category, num_labels=3)
     
+    # # save model for relevancy
+    # fine_tune_plm(gpu_numbers="0", train_data_path="../data/train/relevancy-train-5768.xlsx", test_data_path="../data/test/relevancy-test-5768.xlsx", 
+    #               language_model_to_use="roberta", seed=5768, batch_size=4, learning_rate=1e-5, save_model_path="../model_data/binary_model", num_labels=2)
+    
+    # save model for relevancy
+    fine_tune_plm(gpu_numbers="0", train_data_path="../data/train/IncDec-train-78516.xlsx", test_data_path="../data/test/IncDec-test-78516.xlsx", 
+                  language_model_to_use="roberta", seed=78516, batch_size=4, learning_rate=1e-5, save_model_path="../model_data/IncDec_final_model_roberta", num_labels=3)
+                
+
     print((time() - start_t)/60.0)
     
