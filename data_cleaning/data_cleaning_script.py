@@ -7,6 +7,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 # reading txt files into dataframe of words
+# this transcript directory was the temporary path we used during experimentation, please directly retrieve data from our CoCoHD dataset for reproducing purpose
 transcripts_dir = '/home/congress-user/data_collection/transcripts'
 transcripts_df = pd.DataFrame(columns=['date','hearing_num','title','subcommittee','content','present_member','present_staff'])
 
@@ -42,12 +43,6 @@ for subdir, dirs, files in os.walk(transcripts_dir):
             elif '(Text Not Available In WAIS Format)' in full_file:
                 # example: 109-63
                 continue
-            # elif '[GRAPHIC] [TIFF OMITTED]' in full_file:
-            #     # example: 107-82
-            #     continue
-            # elif '[GRAPHIC(S) NOT AVAILABLE IN TIFF FORMAT]' in full_file:
-            #     # example: 112-166
-            #     continue
             elif '[ERRATA]' in full_file:
                 # example: 109-131
                 continue
@@ -66,7 +61,6 @@ for subdir, dirs, files in os.walk(transcripts_dir):
                 subcommittee = file_split[1].lower().replace('of the','').replace('\n','').strip()
                 if 'committee' in subcommittee:
                     subcommittee = subcommittee.split('committee')[0]
-                # if 'committee on energy and commerce house of representatives'
                 subcommittee = re.sub(' +', ' ', subcommittee)
 
             # extract content
@@ -117,7 +111,6 @@ for subdir, dirs, files in os.walk(transcripts_dir):
                 present_member = members.split('Staff Present:')[0]
                 present_staff = members.split('Staff Present:')[1].split('.',1)[0]
             else:
-                # members = members.replace('Also present:',)
                 if 'Also present:' in members:
                     temp_members = members.split('Also present:')[0]
                     also_present = 'Also present:'+ members.split('Also present:')[1].split('.',1)[0]
@@ -145,16 +138,6 @@ for subdir, dirs, files in os.walk(transcripts_dir):
             present_staff = present_staff.split(';')
             # present_staff = [m.strip() for m in present_staff]
             present_staff = [tuple(m.strip().split(',')) for m in present_staff]
-            # for i in range(len(present_staff)):
-            #     # edge case: misuse of ','
-            #     if len(present_staff[i]) > 2:
-            #         print(file_path)
-            #         print(present_staff[i])
-            
-            # print(content)
-            # lines = [re.subn(r'[^A-Za-z0-9 ]+','',line.strip())[0].split(' ') for line in file.readlines() if line.strip()]
-            # print(lines)
-            # words = [item for sublist in lines for item in sublist]
             
             transcripts_df.loc[len(transcripts_df.index)] = [date, hearing_num, title, subcommittee, content, present_member, present_staff]  
 
@@ -174,9 +157,8 @@ for i in range(len(text)):
     r = ' '.join(r)
     corpus.append(r)
 
-#assign corpus to data['text']
+# assign corpus to data['text']
 transcripts_df['subcom_corpus'] = corpus
-# transcripts_df[transcripts_df['subcom_corpus'].str.contains('energy')]['subcom_corpus'] = 'energy'
 conditions= [(transcripts_df['subcom_corpus'].str.contains('energy') | transcripts_df['subcom_corpus'].str.contains('enegy')),
              transcripts_df['subcom_corpus'].str.contains('health'),
              (transcripts_df['subcom_corpus'].str.contains('communication') | transcripts_df['subcom_corpus'].str.contains('communicatons')),
