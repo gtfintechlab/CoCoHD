@@ -164,3 +164,5 @@ best_model.pt
 model_data
 
 *.bin.gz
+
+datasets/
