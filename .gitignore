@@ -165,4 +165,4 @@ model_data
 
 *.bin.gz
 
-datasets/
+data/hearing_data
