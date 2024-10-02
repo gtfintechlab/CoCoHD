@@ -31,4 +31,4 @@ filtered_df = df.copy()
 filtered_df = filtered_df[filtered_df['sentences'].str.lower().str.contains(fr"\b(?:{'|'.join(keyword_list['keyword'].values)})\b")]
 filtered_df['sentences'] = filtered_df['sentences'].replace(r'\s+', ' ', regex=True)
 
-# filtered_df[['date','hearing_num','sentences']].to_csv('filtered_sentences_full.csv')
+filtered_df[['date','hearing_num','sentences']].to_csv('filtered_sentences_full.csv')

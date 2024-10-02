@@ -8,7 +8,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Auto
 # from transformers.pipelines.pt_utils import KeyDataset
 
 def classify_IncDec():
-    path = "../model_data/IncDec_final_model_roberta"
+    # Put the finetuned model under this path
+    path = "../data/models/IncDec_final_model_roberta"
 
     # Check if the file exists
     if os.path.exists(results_path):
@@ -33,7 +34,7 @@ def classify_IncDec():
         # Write the header
         csv_writer.writeheader()
 
-    dataset = load_dataset('csv', data_files="../data/processed_data/IncDec_full_unlabeled.csv", split='train')
+    dataset = load_dataset('csv', data_files="../data/classification_data/IncDec_full_unlabeled.csv", split='train')
 
     tokenizer = AutoTokenizer.from_pretrained(path, do_lower_case=True, do_basic_tokenize=True)
     model = AutoModelForSequenceClassification.from_pretrained(path, num_labels=3)
@@ -64,5 +65,5 @@ def classify_IncDec():
         executor.map(classify_row, dataset)
 
 if __name__ == "__main__":
-    results_path = '../data/analysis_data/IncDec_full_labeled.csv'
+    results_path = '../data/classification_data/IncDec_full_labeled.csv'
     classify_IncDec()

@@ -1,7 +1,7 @@
 import pandas as pd
 
-relevancy_results_file_path = 'relevancy_full_labeled.csv'
-IncDec_full_results_save_path = '../processed_data/IncDec_full_unlabeled.csv'
+relevancy_results_file_path = '../data/hearing_data/classification_data/relevancy_full_labeled.csv'
+IncDec_full_results_save_path = '../data/hearing_data/classification_data/IncDec_full_unlabeled.csv'
 
 relevancy_results = pd.read_csv(relevancy_results_file_path)
 

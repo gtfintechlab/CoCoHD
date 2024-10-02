@@ -55,7 +55,7 @@ for token, _ in top_similar_tokens:
     target_words.add(token.lower())
 target_words
 
-with open('../data/target_word_list.csv', 'w', newline='') as csvfile:
+with open('target_word_list.csv', 'w', newline='') as csvfile:
     csvwriter = csv.writer(csvfile)
 
     for row in list(target_words):

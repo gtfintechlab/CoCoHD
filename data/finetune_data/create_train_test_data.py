@@ -10,7 +10,7 @@ def create_inc_dec_train_test_data():
         elif label_word == "n":
             return 2
         
-    df = pd.read_csv("./raw_data/inc_dec_classifier_labeled_data_709_v2.csv", usecols=['sentences', 'label'])
+    df = pd.read_csv("../data/finetune_data/inc_dec_classifier_labeled_data_709_v2.csv", usecols=['sentences', 'label'])
 
     df["label"] = df["label"].apply(lambda x: encode(x))
 
@@ -28,7 +28,7 @@ def create_relevancy_train_test_data():
         elif label_word == "r":
             return 1
         
-    df = pd.read_csv("./raw_data/relevancy_classifier_labeled_data_1000_v2.csv", usecols=['sentences', 'label'])
+    df = pd.read_csv("../data/finetune_data/relevancy_classifier_labeled_data_1000_v2.csv", usecols=['sentences', 'label'])
 
     df["label"] = df["label"].apply(lambda x: encode(x))
 

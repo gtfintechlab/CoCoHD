@@ -8,7 +8,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Auto
 from transformers.pipelines.pt_utils import KeyDataset
 
 def classify_relevancy():
-    path = "../model_data/binary_model"
+    # Put the finetuned model under this path
+    path = "../data/models/binary_model"
 
     # Check if the file exists
     if os.path.exists(results_path):
@@ -34,8 +35,7 @@ def classify_relevancy():
         csv_writer.writeheader()
 
     # Alternative
-    dataset = load_dataset('csv', data_files="../data/raw_data/filtered_sentences_full.csv", split='train')
-    # dataset = load_dataset('csv', data_files="../data/raw_data/classification_test_data.csv", split='train')
+    dataset = load_dataset('csv', data_files="../data/classification_data/filtered_sentences_full.csv", split='train')
 
     tokenizer = AutoTokenizer.from_pretrained(path, do_lower_case=True, do_basic_tokenize=True)
     model = AutoModelForSequenceClassification.from_pretrained(path, num_labels=2)
@@ -66,5 +66,5 @@ def classify_relevancy():
         executor.map(classify_row, dataset)
 
 if __name__ == "__main__":
-    results_path = '../data/analysis_data/relevancy_full_labeled.csv'
+    results_path = '../data/classification_data/relevancy_full_labeled.csv'
     classify_relevancy()
