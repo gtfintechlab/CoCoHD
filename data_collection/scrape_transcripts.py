@@ -4,9 +4,6 @@ import time
 import urllib.request
 from tqdm import tqdm
 
-metadata_file = 'metadata.json'
-transcripts_path = '/Users/liu/GT/Congress/transcripts/'
-
 def retrieve(transcript_link, file_path):
     max_retries = 3
     retry_delay = 1
@@ -31,14 +28,14 @@ def retrieve(transcript_link, file_path):
     return -1
 
 
-def download(type, congress_year):
+def download(type, congress_year, path):
     # type is house | senate | joint
     if congress_year[type]:
         for committee in tqdm(congress_year[type], desc=f"{congress_year['congress_year']} - {type}"):
             for hearing in committee['hearings']:
                 govinfo_id = hearing['govinfo_id']
                 transcript_link = hearing['transcript']
-                file_path = f"{transcripts_path}{govinfo_id}.txt"
+                file_path = f"{path}{govinfo_id}.txt"
                 if not os.path.exists(file_path):
                     if retrieve(transcript_link, file_path) == -1:
                         print(f"Couldn't download {transcript_link}")
@@ -50,6 +47,13 @@ def count_files_in_folder(folder_path):
     return count
 
 def main():
+    metadata_file = '../data/hearing_data/hearing_metadata.json'
+    transcripts_path = '../data/hearing_data/transcripts/'
+    # Create the transcripts folder if not exist
+    folder_path = os.path.dirname(transcripts_path)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
     with open(metadata_file, 'r') as json_file:
         metadata = json.load(json_file)
 
@@ -58,9 +62,9 @@ def main():
         os.makedirs(transcripts_path)
     
     for congress_year in metadata:
-        download('house', congress_year)
-        download('joint', congress_year)
-        download('senate', congress_year)
+        download('house', congress_year, transcripts_path)
+        download('joint', congress_year, transcripts_path)
+        download('senate', congress_year, transcripts_path)
 
     num_files = count_files_in_folder(transcripts_path)
     print(f'Number of transcripts downloaded: {num_files}')

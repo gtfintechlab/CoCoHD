@@ -2,6 +2,7 @@ import time
 from datetime import datetime
 import json
 import os
+import argparse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -15,21 +16,21 @@ def setup_driver():
     driver = webdriver.Chrome(options=chrome_options)
     return driver
 
-def getHearingDict(type, driver, congressNum):
+def getHearingDict(type, driver, congress_no):
     # type should be HOUSE | SENATE | JOINT
     committee_list = []
 
     try:
-        panel_xpath = '//div[@data-browsepath=\'{}\']'.format('/'.join([congressNum, type]))
+        panel_xpath = '//div[@data-browsepath=\'{}\']'.format('/'.join([congress_no, type]))
         panel = driver.find_element(By.XPATH, panel_xpath)
         driver.execute_script("arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});", panel)
         panel.click()
         time.sleep(CLICK_WAIT_TIME)
     except NoSuchElementException:
-        print('No house hearing for {} can be found.'.format(congressNum))
+        print('No house hearing for {} can be found.'.format(congress_no))
         return None
     
-    committees_xpath = '//div[contains(@data-browsepath, \'{}\')]'.format('/'.join([congressNum, type, '']))
+    committees_xpath = '//div[contains(@data-browsepath, \'{}\')]'.format('/'.join([congress_no, type, '']))
     committees = driver.find_elements(By.XPATH, committees_xpath)
     # Wait until elements appear
     while len(committees) == 0:
@@ -46,7 +47,7 @@ def getHearingDict(type, driver, congressNum):
         time.sleep(CLICK_WAIT_TIME)
 
         # HEARINGS
-        committee_xpath = '//div[contains(@data-browsepath, \"{}\")]'.format('/'.join([congressNum, type, committee_label]))
+        committee_xpath = '//div[contains(@data-browsepath, \"{}\")]'.format('/'.join([congress_no, type, committee_label]))
         expanded_hearings_section = driver.find_element(By.XPATH, committee_xpath + '/following-sibling::div')
 
         hearings = expanded_hearings_section.find_elements(By.TAG_NAME, 'table')
@@ -54,7 +55,7 @@ def getHearingDict(type, driver, congressNum):
             time.sleep(CLICK_WAIT_TIME)
             hearings = expanded_hearings_section.find_elements(By.TAG_NAME, 'table')
         
-        print(f'{congressNum}th Congress, {type}, {committee_label}, {len(hearings)} hearings found.')
+        print(f'{congress_no}th Congress, {type}, {committee_label}, {len(hearings)} hearings found.')
 
         for hearing in hearings:
             driver.execute_script("arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});", hearing)
@@ -86,7 +87,14 @@ def getHearingDict(type, driver, congressNum):
     return committee_list
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="")
+    parser.add_argument('--no', type=str, help='The serial no of congress you want to scrape', required=False)
+    args = parser.parse_args()
+
     metadata_file = '../data/hearing_data/hearing_metadata.json'
+    folder_path = os.path.dirname(metadata_file)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
 
     # We check if there is an existing metadata file, and continue writing to it if there is one. 
     # TODO: update the writing mechanism to write new hearings to existing metadata file instead of appending an entire year
@@ -104,29 +112,33 @@ if __name__ == "__main__":
     congress_years = driver.find_elements(By.XPATH, '//div[contains(@class, "panel-heading")]')
     for congress_year in congress_years:
         congress_label = congress_year.find_element(By.TAG_NAME, 'span').text
-        congressNum = congress_year.get_attribute('data-browsepath')
-        congress_year_dict = {'congress_year': congress_label, 'serial_no': congressNum, 'house': [], 'senate': [], 'joint': []}
+        congress_no = congress_year.get_attribute('data-browsepath')
+        congress_year_dict = {'congress_year': congress_label, 'serial_no': congress_no, 'house': [], 'senate': [], 'joint': []}
 
-        # We only collect hearings after the 105th congress due to limited txt data prior to that. 
-        if congressNum < '118':
-            break
+        # By default, we only collect hearings after the 105th congress due to limited txt data prior to that. 
+        if args.no:
+            if congress_no != args.no:
+                continue
+        else:
+            if congress_no < '105':
+                break
 
-        print(f'--------------------------- {congressNum} ---------------------------')
+        print(f'--------------------------- {congress_no} ---------------------------')
         
         driver.execute_script("arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});", congress_year)
         congress_year.click()
         time.sleep(CLICK_WAIT_TIME)
         
         print('-------------------------- HOUSE --------------------------')
-        house_hearing_list = getHearingDict('HOUSE', driver, congressNum)
+        house_hearing_list = getHearingDict('HOUSE', driver, congress_no)
         congress_year_dict['house'] = house_hearing_list
 
         print('-------------------------- JOINT --------------------------')
-        joint_hearing_list = getHearingDict('JOINT', driver, congressNum)
+        joint_hearing_list = getHearingDict('JOINT', driver, congress_no)
         congress_year_dict['joint'] = joint_hearing_list
 
         print('-------------------------- SENATE --------------------------')
-        senate_hearing_list = getHearingDict('SENATE', driver, congressNum)
+        senate_hearing_list = getHearingDict('SENATE', driver, congress_no)
         congress_year_dict['senate'] = senate_hearing_list
 
         metadata.append(congress_year_dict)

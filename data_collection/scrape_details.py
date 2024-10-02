@@ -3,8 +3,8 @@ import time
 import concurrent.futures
 import threading
 import logging
+import os
 from selenium import webdriver
-# from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -30,7 +30,6 @@ def get_hearing_details(hearing_metadata, retries=3, delay=5):
         url = hearing_metadata['details']
         try:
             driver.get(url)
-            # time.sleep(CLICK_WAIT)
             WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//h4[@class='contentdetails-title']")))
             hearing_title = driver.find_element(By.XPATH, "//h4[@class='contentdetails-title']").text
             hearing_details['Title'] = hearing_title
@@ -62,8 +61,12 @@ def write_data(output_file, data):
             f.write(',\n')
 
 def add_hearing_details_for_year_type(type, congress_year):
-    serial_no = congress_year['serial_no']
-    output_file = f'./details/{serial_no}_{type}.json'
+    congress_no = congress_year['serial_no']
+    output_file = f'../data/hearing_data/hearing_details/{congress_no}_{type}.json'
+    # Create details folder if not exist
+    folder_path = os.path.dirname(output_file)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
 
     with open(output_file, 'w') as f:
         f.write('[\n')
@@ -89,14 +92,11 @@ def add_hearing_details_for_year_type(type, congress_year):
         f.write('\n]')           # Close the JSON array
 
 if __name__ == "__main__":
-    metadata_file = 'metadata.json'
+    metadata_file = '../data/hearing_data/hearing_metadata.json'
     with open(metadata_file, 'r') as json_file:
         metadata = json.load(json_file)
 
     for congress_year in metadata:
-        if congress_year['serial_no'] > '114': continue
-        # if congress_year['serial_no'] == '114': break
-        
         add_hearing_details_for_year_type('house', congress_year)
         add_hearing_details_for_year_type('senate', congress_year)
         add_hearing_details_for_year_type('joint', congress_year)
