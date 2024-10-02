@@ -12,7 +12,7 @@ Please download the CoCoHD dataset from Huggingface. Three datasets are currentl
 ## Data Collection
 We scrape our dataset from [GovInfo](https://www.govinfo.gov/app/collection/chrg/). First step in our data collection process is to collect the links to the hearing transcript and hearing details for each hearing. Once we have a metadata file of the above information, we collect hearing transcripts and hearing details separately. 
 
-To update the dataset with the latest hearings, run `sh collect_congress_no.sh <congress_no>` within the data_collection folder. For example, to get the hearing details and transcripts for all hearings of the 118th Congress, run `sh collect_congress_no.sh 118`. Make sure to have Selenium installed in your environment. 
+To update the dataset with the latest hearings, run `sh collect_congress_no.sh <congress_no>` within the data_collection folder. For example, to get the hearing details and transcripts for all hearings of the 118th Congress, run `sh collect_congress_no.sh 118` and wait for the script to finish. Make sure to have Selenium installed in your environment. 
 
 To reproduce the entire dataset, run `python scrape_hearings.py` first and then run `python scrape_transcripts.py` and `python scrape_details.py` in any order.
 
