@@ -166,3 +166,5 @@ model_data
 *.bin.gz
 
 data/hearing_data
+
+.DS_Store
