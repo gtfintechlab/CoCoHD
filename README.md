@@ -5,12 +5,16 @@ This repo contains the necessary code and data to reproduce the results we got i
 
 ## Dataset
 Please download the CoCoHD dataset from Huggingface. Three datasets are currently available:
-* Hearing transcripts: contains 30k+ hearing transcripts in txt format from 1997 to 2023. 
-* Hearing details: details for each hearing in JSON format. 
-* Hearing details (cleaned): details for each hearing in one Pandas dataframe. Past committees names mapped to the latest names; invalid held_date removed; errorneous records removed. 
+* [Hearing transcripts](https://huggingface.co/datasets/gtfintechlab/CoCoHD_transcripts): contains 30k+ hearing transcripts in txt format from 1997 to 2023. 
+* [Hearing details](https://huggingface.co/datasets/gtfintechlab/CoCoHD_hearing_details): details for each hearing in JSON format. 
+* [Hearing details (cleaned)](https://huggingface.co/datasets/gtfintechlab/CoCoHD_hearing_details_cleaned): details for each hearing in one Pandas dataframe. Past committees names mapped to the latest names; invalid held_date removed; errorneous records removed. 
 
 ## Data Collection
-We scrape our dataset from GovInfo. 
+We scrape our dataset from [GovInfo](https://www.govinfo.gov/app/collection/chrg/). First step in our data collection process is to collect the links to the hearing transcript and hearing details for each hearing. Once we have a metadata file of the above information, we collect hearing transcripts and hearing details separately. 
+
+To update the dataset with the latest hearings, run `sh collect_congress_no.sh <congress_no>` within the data_collection folder. For example, to get the hearing details and transcripts for all hearings of the 118th Congress, run `sh collect_congress_no.sh 118`. Make sure to have Selenium installed in your environment. 
+
+To reproduce the entire dataset, run `python scrape_hearings.py` first and then run `python scrape_transcripts.py` and `python scrape_details.py` in any order.
 
 ## Data Cleaning
 Scripts in the data cleaning folder help conduct preliminary data cleaning and preprocessing before doing further analysis of the sentences. The steps include converting text transcripts into pandas data frames using regex and text manipulation expressions, splitting the discourse into sentence units, as well as filtering based on the proposed energy-related keyword list. Future researchers interested in conducting similar case studies with our dataset can also refer to the data cleaning scripts to further prepare our dataset for their specific research goals.  
