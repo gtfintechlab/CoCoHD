@@ -3,8 +3,14 @@
 This repo contains the necessary code and data to reproduce the results we got in our Energy and Commerce Committee case study. Specifically, this study examines how the Energy and Commerce Committee hearings either support or discourage the usage of fossil fuels and clean energy. The figure below demonstrates our complete analysis pipeline.  
 ![pipeline_plot](./assets/congress_flowchart.png)
 
-## Data Retrieval
-Please download congressional hearing data from our CoCoHD dataset, retrieving specifically hearing transcripts from the Energy and Commerce Committee from 2001 to 2023.
+## Dataset
+Please download the CoCoHD dataset from Huggingface. Three datasets are currently available:
+* Hearing transcripts: contains 30k+ hearing transcripts in txt format from 1997 to 2023. 
+* Hearing details: details for each hearing in JSON format. 
+* Hearing details (cleaned): details for each hearing in one Pandas dataframe. Past committees names mapped to the latest names; invalid held_date removed; errorneous records removed. 
+
+## Data Collection
+We scrape our dataset from GovInfo. 
 
 ## Data Cleaning
 Scripts in the data cleaning folder help conduct preliminary data cleaning and preprocessing before doing further analysis of the sentences. The steps include converting text transcripts into pandas data frames using regex and text manipulation expressions, splitting the discourse into sentence units, as well as filtering based on the proposed energy-related keyword list. Future researchers interested in conducting similar case studies with our dataset can also refer to the data cleaning scripts to further prepare our dataset for their specific research goals.  
