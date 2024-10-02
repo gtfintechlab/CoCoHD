@@ -22,8 +22,8 @@ Scripts in the data cleaning folder help conduct preliminary data cleaning and p
 ## Exploratory Analysis
 This folder contains a notebook that we used for exploratory data analysis during the initial phase of our study. Although no direct conclusions can be made from this script, it can provide useful insights into congressional hearing patterns and specifically how the Energy and Commerce Committee operates.
 
-## Classification
-In this folder, we organize all the code we used for fine-tuning pre-trained language models to extend our manual annotations to the complete dataset. We train two classifiers in this stage: a relevancy classifier and an inc/dec classifier, employing two PLMs, RoBERTa-base and RoBERTa-large. The labeled data used for model training as well as the training results, including hyperparameter search results and testing/training metrics, are being reported in the data folder. 
+## Finetuning & Classification
+In these two folder, we organize all the code we used for fine-tuning pre-trained language models to extend our manual annotations to the complete dataset. We train two classifiers in this stage: a relevancy classifier and an inc/dec classifier, employing two PLMs, RoBERTa-base and RoBERTa-large. The labeled data used for model training as well as the training results, including hyperparameter search results and testing/training metrics, are being reported in the data folder. 
 
 ## Market Analysis
 We present the notebook that generates the final statistics and findings in our paper in this folder. However, it also contains many exploratory analyses we made along the way that explain and support our decisions such as threshold selections, market feature calculations, and correlation evaluations. Running this notebook from end-to-end will help reproduce the findings in our paper and also gain a deeper understanding of many interesting aspects/figures that are not detailed in the paper.
