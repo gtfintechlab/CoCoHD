@@ -24,5 +24,17 @@
     "Committee on Environment and Public Works": [
         "Committee on Environment and Public Works",
         "Committee on Public Works"
+    ],
+    "Select Committee on Intelligence": [
+        "Select Committee on Intelligence",
+        "Select Committee on Intelligence, Select Committee on Intelligence"
+    ],
+    "Committee on Agriculture, Nutrition, and Forestry": [
+        "Committee on Agriculture, Nutrition, and Forestry",
+        "Committee on Agriculture, Nutrition, and Forestry, Committee on Agriculture, Nutrition, and Forestry"
+    ],
+    "Committee on Veterans' Affairs": [
+        "Committee on Veterans' Affairs",
+        "Committee on Veterans' Affairs, Committee on Veterans' Affairs"
     ]
 }

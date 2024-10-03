@@ -18,7 +18,8 @@
     ],
     "Committee on Armed Services": [
         "Committee on National Security",
-        "Committee on Armed Services"
+        "Committee on Armed Services",
+        "Committee on Armed Services, Committee on Armed Services"
     ],
     "Committee on Financial Services": [
         "Committee on Financial Services",
@@ -34,7 +35,8 @@
     ],
     "Committee on House Administration": [
         "Committee on House Administration",
-        "Committee on Oversight"
+        "Committee on Oversight",
+        "Committee on House Administration, Committee on House Administration"
     ],
     "Committee on Natural Resources": [
         "Committee on Natural Resources",
@@ -47,7 +49,8 @@
     "Committee on Science, Space, and Technology": [
         "Committee on Science, Space, and Technology",
         "Committee on Science",
-        "Committee on Science and Technology"
+        "Committee on Science and Technology",
+        "Committee on Science, Space, and Technology, Committee on Science, Space, and Technology"
     ],
     "Committee on Small Business": [
         "Committee on Small Business",
@@ -55,10 +58,15 @@
     ],
     "Committee on Veterans\" Affairs": [
         "Committee on Veterans\" Affairs",
-        "Committee on Veterans\"Affairs"
+        "Committee on Veterans\"Affairs",
+        "Committee on Veterans' Affairs, Committee on Veterans' Affairs"
     ],
     "Permanent Select Committee on Intelligence": [
         "Permanent Select Committee on Intelligence",
         "Select Committee on Intelligence"
+    ],
+    "Select Committee on the Modernization of Congress": [
+        "Select Committee on the Modernization of Congress",
+        "Select Committee on the Modernization of Congress, Select Committee on the Modernization of Congress"
     ]
 }

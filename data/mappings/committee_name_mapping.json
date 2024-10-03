@@ -1,5 +1,5 @@
 {
-    "House": {
+    "House of Representatives": {
         "Committee on Education and the Workforce": "Committee on Education and the Workforce",
         "Committee on Education and Labor": "Committee on Education and the Workforce",
         "Committee on Economic and Educational Opportunities": "Committee on Education and the Workforce",
@@ -13,6 +13,7 @@
         "Committee on Oversight and Accountability": "Committee on Oversight and Accountability",
         "Committee on National Security": "Committee on Armed Services",
         "Committee on Armed Services": "Committee on Armed Services",
+        "Committee on Armed Services, Committee on Armed Services": "Committee on Armed Services",
         "Committee on Financial Services": "Committee on Financial Services",
         "Committee on Banking and Financial Services": "Committee on Financial Services",
         "Committee on Foreign Affairs": "Committee on Foreign Affairs",
@@ -21,6 +22,7 @@
         "Select Committee on Homeland Security": "Committee on Homeland Security",
         "Committee on House Administration": "Committee on House Administration",
         "Committee on Oversight": "Committee on House Administration",
+        "Committee on House Administration, Committee on House Administration": "Committee on House Administration",
         "Committee on Natural Resources": "Committee on Natural Resources",
         "Committee on Resources": "Committee on Natural Resources",
         "Committee on the Judiciary": "Committee on the Judiciary",
@@ -28,12 +30,16 @@
         "Committee on Science, Space, and Technology": "Committee on Science, Space, and Technology",
         "Committee on Science": "Committee on Science, Space, and Technology",
         "Committee on Science and Technology": "Committee on Science, Space, and Technology",
+        "Committee on Science, Space, and Technology, Committee on Science, Space, and Technology": "Committee on Science, Space, and Technology",
         "Committee on Small Business": "Committee on Small Business",
         "Select Committee on Small Business": "Committee on Small Business",
         "Committee on Veterans\" Affairs": "Committee on Veterans\" Affairs",
         "Committee on Veterans\"Affairs": "Committee on Veterans\" Affairs",
+        "Committee on Veterans' Affairs, Committee on Veterans' Affairs": "Committee on Veterans\" Affairs",
         "Permanent Select Committee on Intelligence": "Permanent Select Committee on Intelligence",
-        "Select Committee on Intelligence": "Permanent Select Committee on Intelligence"
+        "Select Committee on Intelligence": "Permanent Select Committee on Intelligence",
+        "Select Committee on the Modernization of Congress": "Select Committee on the Modernization of Congress",
+        "Select Committee on the Modernization of Congress, Select Committee on the Modernization of Congress": "Select Committee on the Modernization of Congress"
     },
     "Senate": {
         "Committee on Homeland Security and Governmental Affairs": "Committee on Homeland Security and Governmental Affairs",
@@ -49,6 +55,18 @@
         "Committee on Resources": "Committee on Energy and Natural Resources",
         "Committee on Natural Resources": "Committee on Energy and Natural Resources",
         "Committee on Environment and Public Works": "Committee on Environment and Public Works",
-        "Committee on Public Works": "Committee on Environment and Public Works"
+        "Committee on Public Works": "Committee on Environment and Public Works",
+        "Select Committee on Intelligence": "Select Committee on Intelligence",
+        "Select Committee on Intelligence, Select Committee on Intelligence": "Select Committee on Intelligence",
+        "Committee on Agriculture, Nutrition, and Forestry": "Committee on Agriculture, Nutrition, and Forestry",
+        "Committee on Agriculture, Nutrition, and Forestry, Committee on Agriculture, Nutrition, and Forestry": "Committee on Agriculture, Nutrition, and Forestry",
+        "Committee on Veterans' Affairs": "Committee on Veterans' Affairs",
+        "Committee on Veterans' Affairs, Committee on Veterans' Affairs": "Committee on Veterans' Affairs"
+    },
+    "Joint": {
+        "Committee on Veterans' Affairs": "Committee on Veterans' Affairs",
+        "Committee on Veterans' Affairs, Committee on Veterans' Affairs": "Committee on Veterans' Affairs",
+        "Commission on Security and Cooperation in Europe": "Commission on Security and Cooperation in Europe",
+        "Commission on Security and Cooperation in Europe, Commission on Security and Cooperation in Europe": "Commission on Security and Cooperation in Europe"
     }
 }
